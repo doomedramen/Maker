@@ -7,23 +7,21 @@
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
 
-[node name="Node" type="Node" index="0"]
-
-[node name="KinematicBody2D" type="KinematicBody2D" parent="." index="0"]
+[node name="Enemy" type="KinematicBody2D"]
 
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
 collision/safe_margin = 0.08
 
-[node name="Sprite" type="Sprite" parent="KinematicBody2D" index="0"]
+[node name="Sprite" type="Sprite" parent="." index="0"]
 
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 11, 1113, 106, 56 )
-_sections_unfolded = [ "Region" ]
+_sections_unfolded = [ "Offset", "Region" ]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D" index="1"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
 
 position = Vector2( -0.375004, 2.625 )
 scale = Vector2( 4.36538, 2.54808 )

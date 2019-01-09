@@ -1,10 +1,11 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://src/scenes/game.gd" type="Script" id=1]
+[ext_resource path="res://src/scenes/scripts/game.gd" type="Script" id=1]
 [ext_resource path="res://src/tiles/tileSet.tres" type="TileSet" id=2]
 [ext_resource path="res://src/sprites/players/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/fonts/Lato2OFL/Lato-Bold.ttf" type="DynamicFontData" id=4]
 [ext_resource path="res://assets/spritesheet_hud.png" type="Texture" id=5]
+
 
 [sub_resource type="DynamicFont" id=1]
 
