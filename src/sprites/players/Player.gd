@@ -135,12 +135,17 @@ func _physics_process(delta):
 	#	self.position = STARTING_POS
 		
 func create_floor_dust():
-
 	#limt them!
 	if dusts.size() > dusts_max_size:
-		dusts.remove(0)
-		get_parent().remove_child(dusts[0])
-		dusts[0].queue_free()
+	
+		for x in range(dusts.size()):
+			#get_parent().remove_child(dusts[0])
+			dusts[x].queue_free()
+			dusts.remove(x)
+	
+		#dusts.remove([0])
+		#get_parent().remove_child(dusts[0])
+
 
 	var dust = KickupDust.instance()
 	dust.get_node("Particles2D").restart()
@@ -166,5 +171,4 @@ func create_floor_dust():
 		dust.transform = self.transform
 		dust.transform[2][1] += $CollisionShape2D.shape.extents[1]
 		get_parent().add_child(dust)
-		
-	dusts.append(dust)
+		dusts.append(dust)

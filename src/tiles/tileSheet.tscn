@@ -7,7 +7,7 @@
 custom_solver_bias = 0.0
 extents = Vector2( 21.3333, 32 )
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D" type="Node2D" index="0"]
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
@@ -36,7 +36,7 @@ shape = SubResource( 1 )
 
 [node name="Sprite2" type="Sprite" parent="." index="1"]
 
-position = Vector2( 96, 32 )
+position = Vector2( 136, 32 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 0, 64, 64, 64 )
@@ -60,7 +60,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="Sprite3" type="Sprite" parent="." index="2"]
 
-position = Vector2( 160, 32 )
+position = Vector2( 240, 32 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 64, 64 )
@@ -83,7 +83,7 @@ shape = SubResource( 1 )
 
 [node name="Sprite4" type="Sprite" parent="." index="3"]
 
-position = Vector2( 224, 32 )
+position = Vector2( 344, 32 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 64, 0, 64, 64 )
