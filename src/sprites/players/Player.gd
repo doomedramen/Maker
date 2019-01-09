@@ -128,23 +128,11 @@ func _physics_process(delta):
 		anim = new_anim
 		sprite.play(anim)
 		
-	
-	print("cam:",$Camera2D.position)
-	#CHECK FOR DEATH
-	#if position.y < $Camera2D.position.y:
-	#	self.position = STARTING_POS
-		
 func create_floor_dust():
 	#limt them!
-	if dusts.size() > dusts_max_size:
-	
-		for x in range(dusts.size()):
-			#get_parent().remove_child(dusts[0])
-			dusts[x].queue_free()
-			dusts.remove(x)
-	
-		#dusts.remove([0])
-		#get_parent().remove_child(dusts[0])
+	if dusts.size() >= dusts_max_size:
+		dusts[0].queue_free()
+		dusts.remove(0)
 
 
 	var dust = KickupDust.instance()
