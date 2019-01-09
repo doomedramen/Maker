@@ -1,11 +1,10 @@
 [gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://src/scenes/scripts/game.gd" type="Script" id=1]
-[ext_resource path="res://src/tiles/tileSet.tres" type="TileSet" id=2]
+[ext_resource path="res://src/tiles/FloorSet.tres" type="TileSet" id=2]
 [ext_resource path="res://src/sprites/players/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/fonts/Lato2OFL/Lato-Bold.ttf" type="DynamicFontData" id=4]
 [ext_resource path="res://assets/spritesheet_hud.png" type="Texture" id=5]
-
 
 [sub_resource type="DynamicFont" id=1]
 
@@ -20,7 +19,7 @@ _sections_unfolded = [ "Font", "Settings" ]
 default_font = SubResource( 1 )
 _sections_unfolded = [ "Resource" ]
 
-[node name="Game" type="Node" index="0"]
+[node name="Game" type="Node"]
 
 script = ExtResource( 1 )
 
@@ -43,7 +42,7 @@ collision_layer = 1
 collision_mask = 1
 occluder_light_mask = 1
 format = 1
-tile_data = PoolIntArray( 65533, 1, 0, 31, 1, 0, 131069, 3, 0, 65567, 3, 0, 196605, 3, 0, 131072, 0, 0, 131073, 1, 0, 131074, 2, 0, 131086, 0, 0, 131087, 1, 0, 131088, 2, 0, 131098, 0, 0, 131099, 1, 0, 131100, 2, 0, 131103, 3, 0, 262141, 3, 0, 196639, 3, 0, 327677, 3, 0, 262175, 3, 0, 393213, 3, 0, 393214, 1, 0, 393215, 1, 0, 327680, 1, 0, 327681, 1, 0, 327682, 1, 0, 327683, 1, 0, 327684, 1, 0, 327685, 1, 0, 327686, 1, 0, 327687, 1, 0, 327688, 1, 0, 327689, 1, 0, 327690, 1, 0, 327691, 1, 0, 327692, 1, 0, 327693, 1, 0, 327694, 1, 0, 327695, 1, 0, 327696, 1, 0, 327697, 1, 0, 327698, 1, 0, 327699, 1, 0, 327700, 1, 0, 327701, 1, 0, 327702, 1, 0, 327703, 1, 0, 327704, 1, 0, 327705, 1, 0, 327706, 1, 0, 327707, 1, 0, 327708, 1, 0, 327709, 1, 0, 327710, 1, 0, 327711, 3, 0 )
+tile_data = PoolIntArray( 65533, 2, 0, 31, 2, 0, 131069, 3, 0, 65567, 3, 0, 196605, 3, 0, 131072, 1, 0, 131073, 2, 0, 131074, 0, 0, 131086, 1, 0, 131087, 2, 0, 131088, 0, 0, 131098, 1, 0, 131099, 2, 0, 131100, 0, 0, 131103, 3, 0, 262141, 3, 0, 196639, 3, 0, 327677, 3, 0, 262175, 3, 0, 393213, 3, 0, 393214, 2, 0, 393215, 2, 0, 327680, 2, 0, 327681, 2, 0, 327682, 2, 0, 327683, 2, 0, 327684, 2, 0, 327685, 2, 0, 327686, 2, 0, 327687, 2, 0, 327688, 2, 0, 327689, 2, 0, 327690, 2, 0, 327691, 2, 0, 327692, 2, 0, 327693, 2, 0, 327694, 2, 0, 327695, 2, 0, 327696, 2, 0, 327697, 2, 0, 327698, 2, 0, 327699, 2, 0, 327700, 2, 0, 327701, 2, 0, 327702, 2, 0, 327703, 2, 0, 327704, 2, 0, 327705, 2, 0, 327706, 2, 0, 327707, 2, 0, 327708, 2, 0, 327709, 2, 0, 327710, 2, 0, 327711, 3, 0 )
 _sections_unfolded = [ "Cell" ]
 
 [node name="Player" parent="." index="1" instance=ExtResource( 3 )]

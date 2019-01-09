@@ -4,8 +4,8 @@
 [ext_resource path="res://assets/player/Adventurer/Poses/adventurer_idle.png" type="Texture" id=2]
 [ext_resource path="res://assets/player/Adventurer/Poses/adventurer_walk1.png" type="Texture" id=3]
 [ext_resource path="res://assets/player/Adventurer/Poses/adventurer_walk2.png" type="Texture" id=4]
-[ext_resource path="res://assets/player/Adventurer/Poses/adventurer_jump.png" type="Texture" id=5]
-[ext_resource path="res://assets/player/Adventurer/Poses/adventurer_fall.png" type="Texture" id=6]
+[ext_resource path="res://assets/player/Adventurer/Poses/adventurer_fall.png" type="Texture" id=5]
+[ext_resource path="res://assets/player/Adventurer/Poses/adventurer_jump.png" type="Texture" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -27,12 +27,12 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 5 ) ],
 "loop": true,
-"name": "jumping",
+"name": "falling",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 6 ) ],
 "loop": true,
-"name": "falling",
+"name": "jumping",
 "speed": 5.0
 } ]
 _sections_unfolded = [ "Resource" ]
