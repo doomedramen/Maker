@@ -1,0 +1,168 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://src/scenes/game.gd" type="Script" id=1]
+[ext_resource path="res://src/tiles/tileSet.tres" type="TileSet" id=2]
+[ext_resource path="res://src/sprites/players/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/fonts/Lato2OFL/Lato-Bold.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://assets/spritesheet_hud.png" type="Texture" id=5]
+
+[sub_resource type="DynamicFont" id=1]
+
+size = 32
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 4 )
+_sections_unfolded = [ "Font", "Settings" ]
+
+[sub_resource type="Theme" id=2]
+
+default_font = SubResource( 1 )
+_sections_unfolded = [ "Resource" ]
+
+[node name="Game" type="Node" index="0"]
+
+script = ExtResource( 1 )
+
+[node name="TileMap" type="TileMap" parent="." index="0"]
+
+position = Vector2( -1120, 0 )
+mode = 0
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 64, 64 )
+cell_quadrant_size = 16
+cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+cell_half_offset = 2
+cell_tile_origin = 0
+cell_y_sort = false
+cell_clip_uv = false
+collision_use_kinematic = false
+collision_friction = 1.0
+collision_bounce = 0.0
+collision_layer = 1
+collision_mask = 1
+occluder_light_mask = 1
+format = 1
+tile_data = PoolIntArray( 65533, 1, 0, 31, 1, 0, 131069, 3, 0, 65567, 3, 0, 196605, 3, 0, 131072, 0, 0, 131073, 1, 0, 131074, 2, 0, 131086, 0, 0, 131087, 1, 0, 131088, 2, 0, 131098, 0, 0, 131099, 1, 0, 131100, 2, 0, 131103, 3, 0, 262141, 3, 0, 196639, 3, 0, 327677, 3, 0, 262175, 3, 0, 393213, 3, 0, 393214, 1, 0, 393215, 1, 0, 327680, 1, 0, 327681, 1, 0, 327682, 1, 0, 327683, 1, 0, 327684, 1, 0, 327685, 1, 0, 327686, 1, 0, 327687, 1, 0, 327688, 1, 0, 327689, 1, 0, 327690, 1, 0, 327691, 1, 0, 327692, 1, 0, 327693, 1, 0, 327694, 1, 0, 327695, 1, 0, 327696, 1, 0, 327697, 1, 0, 327698, 1, 0, 327699, 1, 0, 327700, 1, 0, 327701, 1, 0, 327702, 1, 0, 327703, 1, 0, 327704, 1, 0, 327705, 1, 0, 327706, 1, 0, 327707, 1, 0, 327708, 1, 0, 327709, 1, 0, 327710, 1, 0, 327711, 3, 0 )
+_sections_unfolded = [ "Cell" ]
+
+[node name="Player" parent="." index="1" instance=ExtResource( 3 )]
+
+position = Vector2( 210, 260 )
+_sections_unfolded = [ "Pause", "Visibility" ]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." index="2"]
+
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+
+[node name="top_right" type="Control" parent="CanvasLayer" index="0"]
+
+editor/display_folded = true
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+margin_left = -112.0
+margin_bottom = 144.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/top_right" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 16.0
+margin_top = 64.0
+margin_right = 96.0
+margin_bottom = 103.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+theme = SubResource( 2 )
+text = "0"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Theme" ]
+
+[node name="Coins" type="Sprite" parent="CanvasLayer/top_right" index="1"]
+
+position = Vector2( 32, 16 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 5 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 16, 528, 96, 96 )
+_sections_unfolded = [ "Offset", "Region", "Transform" ]
+
+[node name="top_left" type="Control" parent="CanvasLayer" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 112.0
+margin_bottom = 144.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="Health" type="Sprite" parent="CanvasLayer/top_left" index="0"]
+
+position = Vector2( 32, 16 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 5 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 15, 272, 96, 96 )
+_sections_unfolded = [ "Transform", "Visibility" ]
+
+[node name="PauseMenu" type="CanvasLayer" parent="." index="3"]
+
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+
+[node name="AcceptDialog" type="AcceptDialog" parent="PauseMenu" index="0"]
+
+pause_mode = 2
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.01
+margin_right = -881.0
+margin_bottom = 58.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+popup_exclusive = false
+window_title = "Paused"
+resizable = false
+dialog_text = "The game is paused"
+dialog_hide_on_ok = true
+_sections_unfolded = [ "Anchor", "Dialog", "Pause", "Rect" ]
+
+
