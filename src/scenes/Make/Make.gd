@@ -6,9 +6,10 @@ var current_grid_position = Vector2()
 
 var lmb_down = false
 
-var Ememy = load("res://src/sprites/Enemy.tscn")
+#var Ememy = load("res://src/sprites/Enemy.tscn")
 
-onready var currentItem = Ememy.instance()
+var currentItem
+#onready var currentItem = Ememy.instance()
 
 func _ready():
 	add_child(currentItem)

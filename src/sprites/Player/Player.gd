@@ -15,7 +15,7 @@ const SIDING_CHANGE_SPEED = 10
 
 const lEFT_INPUT_NAME = "ui_left"
 const RIGHT_INPUT_NAME = "ui_right"
-const JUMP_INPUT_NAME = "ui_up"
+const JUMP_INPUT_NAME = "jump"
 const RUN_INPUT_NAME = "sprint"
 
 var linear_vel = Vector2()
@@ -32,7 +32,7 @@ const dusts_max_size = 4
 
 #cache the sprite here for fast access (we will set scale to flip it often)
 onready var sprite = $AnimatedSprite
-onready var KickupDust = load("res://src/sprites/Kickup_Dust.tscn")
+onready var KickupDust = load("res://src/sprites/Effects/Kickup_Dust.tscn")
 
 onready var STARTING_POS = self.position
 
@@ -44,7 +44,7 @@ func _physics_process(delta):
 	### MOVEMENT ###
 	
 	# Reduce gravity when holding 'jump'
-	if Input.is_action_pressed("ui_up"):
+	if Input.is_action_pressed(JUMP_INPUT_NAME):
 		processed_gravty = GRAVITY_VEC*GRAVITY_JUMP_MULTIPLIER
 	else:
 		processed_gravty = GRAVITY_VEC
@@ -101,8 +101,8 @@ func _physics_process(delta):
 			
 		if new_anim == "running":
 			#set animation speed
-			var run_animation_speed = abs(linear_vel.x*0.02)
-			run_animation_speed = max(run_animation_speed, 6) #TODO not ideal, should just work
+			var run_animation_speed = abs(linear_vel.x*0.016)
+			run_animation_speed = max(run_animation_speed, 4) #TODO not ideal, should just work
 			
 			sprite.frames.set_animation_speed("running", run_animation_speed)
 	else:

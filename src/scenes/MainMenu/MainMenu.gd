@@ -12,10 +12,10 @@ func _ready():
 	$Panel/MakeButton.connect("button_up", self, "make")
 	
 func play():
-	get_tree().change_scene("res://src/scenes/game.tscn")
+	get_tree().change_scene("res://src/scenes/Play/Play.tscn")
 		
 func make():
-	get_tree().change_scene("res://src/scenes/LevelEditor.tscn")
+	get_tree().change_scene("res://src/scenes/Make/Make.tscn")
 	
 
 #func _process(delta):

@@ -1,8 +1,11 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://src/scenes/scripts/MainMenu.gd" type="Script" id=1]
+[ext_resource path="res://src/scenes/MainMenu/MainMenu.gd" type="Script" id=1]
 
-[node name="MainMenu" type="Node" index="0"]
+[sub_resource type="Theme" id=1]
+
+
+[node name="MainMenu" type="Node"]
 
 script = ExtResource( 1 )
 
@@ -18,6 +21,8 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
+theme = SubResource( 1 )
+_sections_unfolded = [ "Theme" ]
 
 [node name="MakeButton" type="Button" parent="Panel" index="0"]
 
@@ -25,10 +30,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -176.0
-margin_top = -44.0
+margin_left = -248.0
+margin_top = -68.0
 margin_right = -48.0
-margin_bottom = 36.0
+margin_bottom = 57.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -43,6 +48,7 @@ group = null
 text = "MAKE"
 flat = false
 align = 1
+_sections_unfolded = [ "Theme" ]
 
 [node name="PlayButton" type="Button" parent="Panel" index="1"]
 
@@ -50,15 +56,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -16.0
-margin_top = -44.0
-margin_right = 112.0
-margin_bottom = 36.0
+margin_left = 48.0
+margin_top = -68.0
+margin_right = 248.0
+margin_bottom = 57.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
 mouse_filter = 0
-mouse_default_cursor_shape = 0
+mouse_default_cursor_shape = 4
 size_flags_horizontal = 1
 size_flags_vertical = 1
 toggle_mode = false
@@ -68,5 +74,6 @@ group = null
 text = "PLAY"
 flat = false
 align = 1
+_sections_unfolded = [ "Mouse", "Theme" ]
 
 

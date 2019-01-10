@@ -1,11 +1,12 @@
 [gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://src/sprites/players/Player.gd" type="Script" id=1]
+[ext_resource path="res://src/sprites/Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/player/Adventurer/Poses/adventurer_idle.png" type="Texture" id=2]
 [ext_resource path="res://assets/player/Adventurer/Poses/adventurer_walk1.png" type="Texture" id=3]
 [ext_resource path="res://assets/player/Adventurer/Poses/adventurer_walk2.png" type="Texture" id=4]
 [ext_resource path="res://assets/player/Adventurer/Poses/adventurer_fall.png" type="Texture" id=5]
 [ext_resource path="res://assets/player/Adventurer/Poses/adventurer_jump.png" type="Texture" id=6]
+
 
 [sub_resource type="RectangleShape2D" id=1]
 
