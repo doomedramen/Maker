@@ -11,12 +11,13 @@ const JUMP_SPEED = 1000
 const EXTRA_JUMP_SPEED_FROM_RUN = 0.1
 const SIDING_CHANGE_SPEED = 10
 
-
-
 const lEFT_INPUT_NAME = "ui_left"
 const RIGHT_INPUT_NAME = "ui_right"
 const JUMP_INPUT_NAME = "jump"
 const RUN_INPUT_NAME = "sprint"
+
+const dusts = []
+const dusts_max_size = 4
 
 var linear_vel = Vector2()
 var onair_time = 0 #
@@ -27,8 +28,10 @@ var processed_walk_speed = WALK_SPEED_RUN_MULTIPLIER
 
 var anim=""
 
-const dusts = []
-const dusts_max_size = 4
+var coin_count = 0
+
+var level
+
 
 #cache the sprite here for fast access (we will set scale to flip it often)
 onready var sprite = $AnimatedSprite
@@ -36,6 +39,13 @@ onready var KickupDust = load("res://src/sprites/Effects/Kickup_Dust.tscn")
 
 onready var STARTING_POS = self.position
 
+func _ready():
+	#get parent, level?
+	level = get_parent()
+	if level.get_name() != "Play":
+		print("Players parent is not 'Play'!!")
+		get_tree().quit()
+		
 func _physics_process(delta):
 	#increment counters
 
@@ -75,7 +85,7 @@ func _physics_process(delta):
 
 	target_speed *= processed_walk_speed
 	linear_vel.x = lerp(linear_vel.x, target_speed, 0.1)
-	print(linear_vel.x)
+	#print(linear_vel.x)
 
 	# Jumping
 	if on_floor and Input.is_action_just_pressed(JUMP_INPUT_NAME):
@@ -138,25 +148,22 @@ func create_floor_dust():
 	var dust = KickupDust.instance()
 	dust.get_node("Particles2D").restart()
 	
-	var collision = get_slide_collision(0)
-	#double check for floor collision
-	if collision:
 	
-
-#		var tile_id = collision.collider.get_cellv(collision.collider.world_to_map(collision.position))
-#		if tile_id != null && tile_id > -1:
-#			var tile_set = collision.collider.tile_set
-#			var tile_stream_texture = tile_set.tile_get_texture(tile_id)
-#			var tile_texture = tile_stream_texture.get_data()
-#			tile_texture.lock()
-#			var tile_region = tile_set.tile_get_region(tile_id)
-#			print(tile_region)
-#			var random_pixel = tile_texture.get_pixel(int(rand_range(tile_region.position[0], tile_region.end[0])),tile_region.position[0])
-#			tile_texture.unlock()
-#			dust.set_modulate(random_pixel)
-
+	#var collision = get_slide_collision(get_slide_count() - 1)
+	#double check for floor collision
+	if is_on_floor():
 		dust.z_index = self.z_index+1
 		dust.transform = self.transform
 		dust.transform[2][1] += $CollisionShape2D.shape.extents[1]
 		get_parent().add_child(dust)
 		dusts.append(dust)
+		
+func add_coin():
+	$PickupCoinSound.play()
+	coin_count +=1
+	level.update_coins()
+	
+	#TODO notify level
+	
+func died():
+	prind('ded')
