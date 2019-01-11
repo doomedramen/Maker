@@ -28,14 +28,24 @@ func pos_to_cell(vec2):
 	return out
 	
 func draw_grid():
-	var projectResolution=get_viewport().size
+	#var projectResolution=OS.get_real_window_size()#get_viewport().size
+	var projectResolution = Vector2(ProjectSettings.get_setting("display/window/size/width"), ProjectSettings.get_setting("display/window/size/height"))
+	
 	var widest = projectResolution.x if projectResolution.x > projectResolution.y else projectResolution.y
-	var max_lines = (widest / GRID_SIZE)*2 #avoid crash if size too smal
 
+	var zoom = $Camera2D.zoom #should be same as y
+	
+	print(projectResolution)
+	
+	var max_lines = (widest / GRID_SIZE)*3 #avoid crash if size too smal
+	
+	var start = $Camera2D.position
+	var end = Vector2(start.x+projectResolution.x * zoom.x, start.y+projectResolution.y * zoom.y)
 
-	var padding = GRID_SIZE*2
-	var start = $Camera2D.position - (projectResolution/2) - Vector2(padding, padding)
-	var end = Vector2(start.x + projectResolution.x, start.y + projectResolution.y) + (Vector2(padding, padding)*2)
+	start.x -= GRID_SIZE
+	start.y -= GRID_SIZE
+	end.x += GRID_SIZE
+	end.y += GRID_SIZE
 		
 	var startCell = pos_to_cell(start)
 	var endCell = pos_to_cell(end)
@@ -48,6 +58,7 @@ func draw_grid():
 		
 
 func _draw():
+	draw_grid()
 
 	var currentCell = Rect2(current_grid_position,Vector2(GRID_SIZE,GRID_SIZE))
 	draw_rect(currentCell, Color(0, 0, 1,.3), 1)
@@ -63,6 +74,8 @@ func _input(ev):
 		var mouse_pos = get_global_mouse_position();
 		mouse_pos -= Vector2(GRID_SIZE/2, GRID_SIZE/2)
 
+		#TODO only bother with grid position if not over UI
+
 		current_grid_position = pos_to_cell(mouse_pos)
 		
 		#if currentItem:
@@ -75,13 +88,13 @@ func _input(ev):
 		
 	if ev is InputEventKey:
 		if Input.is_action_pressed("ui_left"):
-			$Camera2D.translate(Vector2(-CAMERA_MOVE_SPEED_STEP, 0))
+			$Camera2D.position.x -=CAMERA_MOVE_SPEED_STEP
 		if Input.is_action_pressed("ui_right"):
-			$Camera2D.translate(Vector2(CAMERA_MOVE_SPEED_STEP, 0))
+			$Camera2D.position.x +=CAMERA_MOVE_SPEED_STEP
 		if Input.is_action_pressed("ui_up"):
-			$Camera2D.translate(Vector2(0,-CAMERA_MOVE_SPEED_STEP))
+			$Camera2D.position.y -=CAMERA_MOVE_SPEED_STEP
 		if Input.is_action_pressed("ui_down"):
-			$Camera2D.translate(Vector2(0,CAMERA_MOVE_SPEED_STEP))
+			$Camera2D.position.y +=CAMERA_MOVE_SPEED_STEP
 		
 	
 	
