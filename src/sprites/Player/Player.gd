@@ -15,6 +15,7 @@ const lEFT_INPUT_NAME = "ui_left"
 const RIGHT_INPUT_NAME = "ui_right"
 const JUMP_INPUT_NAME = "jump"
 const RUN_INPUT_NAME = "sprint"
+const DOWN_INPUT_NAME = "ui_down"
 
 const dusts = []
 const dusts_max_size = 4
@@ -36,7 +37,6 @@ var level
 #cache the sprite here for fast access (we will set scale to flip it often)
 onready var sprite = $AnimatedSprite
 onready var KickupDust = load("res://src/sprites/Effects/Kickup_Dust.tscn")
-
 onready var STARTING_POS = self.position
 
 func _ready():
@@ -72,10 +72,11 @@ func _physics_process(delta):
 	### CONTROL ###
 
 	# Horizontal Movement
+	var pressing_down = Input.is_action_pressed(DOWN_INPUT_NAME)
 	var target_speed = 0
-	if Input.is_action_pressed(lEFT_INPUT_NAME):
+	if Input.is_action_pressed(lEFT_INPUT_NAME) and !pressing_down:
 		target_speed += -1
-	if Input.is_action_pressed(RIGHT_INPUT_NAME):
+	if Input.is_action_pressed(RIGHT_INPUT_NAME) and !pressing_down:
 		target_speed +=  1
 
 	if Input.is_action_pressed(RUN_INPUT_NAME):
@@ -84,7 +85,12 @@ func _physics_process(delta):
 		processed_walk_speed = WALK_SPEED
 
 	target_speed *= processed_walk_speed
-	linear_vel.x = lerp(linear_vel.x, target_speed, 0.1)
+	
+	var lerp_rate = 0.1
+	if on_floor and pressing_down:
+		lerp_rate *= 0.4
+	
+	linear_vel.x = lerp(linear_vel.x, target_speed, lerp_rate)
 	#print(linear_vel.x)
 
 	# Jumping
@@ -95,25 +101,33 @@ func _physics_process(delta):
 		linear_vel.y -= abs(linear_vel.x*EXTRA_JUMP_SPEED_FROM_RUN)
 		#$sound_jump.play()
 
-
 	### ANIMATION ###
 
 	var new_anim = "idle"
-
+	
 	if on_floor:
 		if linear_vel.x < -SIDING_CHANGE_SPEED:
 			sprite.scale.x = -1
-			new_anim = "running"
+			new_anim = "running" if Input.is_action_pressed(RUN_INPUT_NAME) else "walking"
 
 		if linear_vel.x > SIDING_CHANGE_SPEED:
 			sprite.scale.x = 1
 			new_anim = "running"
+			new_anim = "running" if Input.is_action_pressed(RUN_INPUT_NAME) else "walking"
 			
+		if pressing_down && abs(linear_vel.x) == 0:
+			new_anim = "ducking"
+			
+		if pressing_down && abs(linear_vel.x) > 0:
+			new_anim = "sliding"
+			
+		if new_anim == "walking":
+			var walk_animation_speed = abs(linear_vel.x*0.05)
+			walk_animation_speed = max(walk_animation_speed, 4) #TODO not ideal, should just work
+			sprite.frames.set_animation_speed("walking", walk_animation_speed)
 		if new_anim == "running":
-			#set animation speed
 			var run_animation_speed = abs(linear_vel.x*0.016)
 			run_animation_speed = max(run_animation_speed, 4) #TODO not ideal, should just work
-			
 			sprite.frames.set_animation_speed("running", run_animation_speed)
 	else:
 	

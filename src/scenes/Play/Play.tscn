@@ -5,7 +5,7 @@
 [ext_resource path="res://src/tiles/LevelItemsSheet.tres" type="TileSet" id=3]
 [ext_resource path="res://assets/fonts/Lato2OFL/Lato-Bold.ttf" type="DynamicFontData" id=4]
 [ext_resource path="res://assets/spritesheets/spritesheet_hud.png" type="Texture" id=5]
-[ext_resource path="res://src/sprites/Player/Player.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/sprites/Player/Player2.tscn" type="PackedScene" id=6]
 
 [sub_resource type="DynamicFont" id=1]
 
@@ -185,7 +185,6 @@ _sections_unfolded = [ "Anchor", "Dialog", "Pause", "Rect" ]
 
 [node name="Player" parent="." index="4" instance=ExtResource( 6 )]
 
-position = Vector2( 64, 264 )
-_sections_unfolded = [ "Collision", "Pause", "Visibility" ]
+position = Vector2( -48, 288 )
 
 

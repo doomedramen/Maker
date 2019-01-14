@@ -8,6 +8,8 @@ var lmb_down = false
 
 const CAMERA_MOVE_SPEED_STEP = 100
 
+onready var Grid = preload("res://src/lib/grid.gd").new()
+
 #var Ememy = load("res://src/sprites/Enemy.tscn")
 
 var currentItem
@@ -20,45 +22,10 @@ func _ready():
 	
 	#snap camera
 	#$Camera2D.position = pos_to_cell($Camera2D.position)
-
-func pos_to_cell(vec2):
-	var out = Vector2();
-	out.x = round(vec2.x / GRID_SIZE) * GRID_SIZE;
-	out.y = round(vec2.y / GRID_SIZE) * GRID_SIZE;
-	return out
 	
-func draw_grid():
-	#var projectResolution=OS.get_real_window_size()#get_viewport().size
-	var projectResolution = Vector2(ProjectSettings.get_setting("display/window/size/width"), ProjectSettings.get_setting("display/window/size/height"))
-	
-	var widest = projectResolution.x if projectResolution.x > projectResolution.y else projectResolution.y
-
-	var zoom = $Camera2D.zoom #should be same as y
-	
-	print(projectResolution)
-	
-	var max_lines = (widest / GRID_SIZE)*3 #avoid crash if size too smal
-	
-	var start = $Camera2D.position
-	var end = Vector2(start.x+projectResolution.x * zoom.x, start.y+projectResolution.y * zoom.y)
-
-	start.x -= GRID_SIZE
-	start.y -= GRID_SIZE
-	end.x += GRID_SIZE
-	end.y += GRID_SIZE
-		
-	var startCell = pos_to_cell(start)
-	var endCell = pos_to_cell(end)
-	
-	for i in range(0, max_lines):
-		i = GRID_SIZE*i
-		
-		draw_line(Vector2(startCell.x,startCell.y+i), Vector2(endCell.x, startCell.y+i), Color(1, 1, 1,.5), 1)
-		draw_line(Vector2(startCell.x+i,startCell.y), Vector2(startCell.x+i, endCell.y), Color(1, 1, 1,.5), 1)
-		
-
 func _draw():
-	draw_grid()
+	#draw_grid()
+	Grid.draw_grid($Camera2D, self)
 
 	var currentCell = Rect2(current_grid_position,Vector2(GRID_SIZE,GRID_SIZE))
 	draw_rect(currentCell, Color(0, 0, 1,.3), 1)
@@ -76,7 +43,7 @@ func _input(ev):
 
 		#TODO only bother with grid position if not over UI
 
-		current_grid_position = pos_to_cell(mouse_pos)
+		current_grid_position = Grid.pos_to_cell(mouse_pos)
 		
 		#if currentItem:
 		#	var center_of_cell = Vector2(current_grid_position.x+(GRID_SIZE/2), current_grid_position.y+(GRID_SIZE/2))
