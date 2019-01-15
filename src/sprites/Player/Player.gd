@@ -74,10 +74,17 @@ func _physics_process(delta):
 	# Horizontal Movement
 	var pressing_down = Input.is_action_pressed(DOWN_INPUT_NAME)
 	var target_speed = 0
-	if Input.is_action_pressed(lEFT_INPUT_NAME) and !pressing_down:
-		target_speed += -1
-	if Input.is_action_pressed(RIGHT_INPUT_NAME) and !pressing_down:
-		target_speed +=  1
+	
+	if on_floor:
+		if Input.is_action_pressed(lEFT_INPUT_NAME) and !pressing_down:
+			target_speed += -1
+		if Input.is_action_pressed(RIGHT_INPUT_NAME) and !pressing_down:
+			target_speed +=  1
+	else:
+		if Input.is_action_pressed(lEFT_INPUT_NAME):
+			target_speed += -1
+		if Input.is_action_pressed(RIGHT_INPUT_NAME):
+			target_speed +=  1
 
 	if Input.is_action_pressed(RUN_INPUT_NAME):
 		processed_walk_speed = WALK_SPEED * WALK_SPEED_RUN_MULTIPLIER
@@ -143,9 +150,11 @@ func _physics_process(delta):
 			new_anim = "jumping"
 		else:
 			new_anim = "falling"
+			
+		if pressing_down:
+			new_anim = "ducking"
 
-	if anim == "falling" && new_anim != "falling":
-		#just landed
+	if anim == "falling" && new_anim != "falling":#just landed
 		create_floor_dust()
 
 	if new_anim != anim:

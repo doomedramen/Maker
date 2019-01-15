@@ -12,20 +12,22 @@ radius = 32.1724
 [sub_resource type="RectangleShape2D" id=2]
 
 custom_solver_bias = 0.0
-extents = Vector2( 12, 64 )
+extents = Vector2( 8.79999, 64 )
 
-[node name="LevelItemsSheet" type="Node" index="0"]
+[node name="LevelItemsSheet" type="Node"]
 
 [node name="Coin" type="Sprite" parent="." index="0"]
 
 texture = ExtResource( 1 )
 region_enabled = true
-region_rect = Rect2( 672, 416, 64, 64 )
+region_rect = Rect2( 336, 208, 32, 32 )
 script = ExtResource( 2 )
 _sections_unfolded = [ "Offset" ]
 
 [node name="Area2D" type="Area2D" parent="Coin" index="0"]
 
+position = Vector2( -4.76837e-07, 4.76837e-07 )
+scale = Vector2( 0.5, 0.5 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
@@ -40,16 +42,15 @@ shape = SubResource( 1 )
 
 [node name="Flag" type="Sprite" parent="." index="1"]
 
-position = Vector2( 160, 0 )
+position = Vector2( 128, 16 )
 texture = ExtResource( 1 )
 region_enabled = true
-region_rect = Rect2( 256, 384, 128, 128 )
+region_rect = Rect2( 320, 128, 64, 64 )
 script = ExtResource( 3 )
 _sections_unfolded = [ "Offset", "Region" ]
 
 [node name="Area2D" type="Area2D" parent="Flag" index="0"]
 
-position = Vector2( -160, 0 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
@@ -60,7 +61,8 @@ audio_bus_name = "Master"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Flag/Area2D" index="0"]
 
-position = Vector2( 108, 0 )
+position = Vector2( -27.4375, 0 )
+scale = Vector2( 0.54767, 0.5 )
 shape = SubResource( 2 )
 
 
