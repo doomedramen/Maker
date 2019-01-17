@@ -42,9 +42,9 @@ onready var STARTING_POS = self.position
 func _ready():
 	#get parent, level?
 	level = get_parent()
-	if level.get_name() != "Play":
-		print("Players parent is not 'Play'!!")
-		get_tree().quit()
+#	if level.get_name() != "Play":
+#		print("Players parent is not 'Play'!!")
+#		get_tree().quit()
 		
 func _physics_process(delta):
 	#increment counters

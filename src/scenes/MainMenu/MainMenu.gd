@@ -8,7 +8,7 @@ func _ready():
 	# Called when the node is added to the scene for the first time.
 	# Initialization here
 	
-	$Panel/PlayButton.connect("button_up", self, "play")
+	#$Panel/PlayButton.connect("button_up", self, "play")
 	$Panel/MakeButton.connect("button_up", self, "make")
 	
 func play():

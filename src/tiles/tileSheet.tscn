@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://assets/spritesheets/spritesheet_ground.png" type="Texture" id=1]
-
+[ext_resource path="res://assets/tiles/Ground/Grass/grassRight.png" type="Texture" id=1]
+[ext_resource path="res://assets/tiles/Ground/Grass/grassLeft.png" type="Texture" id=2]
+[ext_resource path="res://assets/tiles/Ground/Grass/grassMid.png" type="Texture" id=3]
+[ext_resource path="res://assets/tiles/Ground/Grass/grassCenter.png" type="Texture" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -10,15 +12,18 @@ extents = Vector2( 32, 32 )
 
 [node name="FloorSheet" type="Node" index="0"]
 
-[node name="Sprite" type="Sprite" parent="." index="0"]
+[node name="GrassRight" type="Sprite" parent="." index="0"]
 
+position = Vector2( 112, -48 )
+scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 1 )
-region_enabled = true
 region_rect = Rect2( 0, 0, 64, 64 )
-_sections_unfolded = [ "Region" ]
+_sections_unfolded = [ "Offset", "Region" ]
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Sprite" index="0"]
+[node name="StaticBody2D" type="StaticBody2D" parent="GrassRight" index="0"]
 
+position = Vector2( -1.90735e-06, -1.90735e-06 )
+scale = Vector2( 2, 2 )
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
@@ -27,20 +32,22 @@ constant_angular_velocity = 0.0
 friction = 1.0
 bounce = 0.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite/StaticBody2D" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GrassRight/StaticBody2D" index="0"]
 
 shape = SubResource( 1 )
 
-[node name="Sprite2" type="Sprite" parent="." index="1"]
+[node name="GrassLeft" type="Sprite" parent="." index="1"]
 
-position = Vector2( 64, 0 )
-texture = ExtResource( 1 )
-region_enabled = true
+position = Vector2( 48, -48 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 2 )
 region_rect = Rect2( 0, 128, 64, 64 )
 _sections_unfolded = [ "Region" ]
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Sprite2" index="0"]
+[node name="StaticBody2D" type="StaticBody2D" parent="GrassLeft" index="0"]
 
+position = Vector2( -1.90735e-06, -1.90735e-06 )
+scale = Vector2( 2, 2 )
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
@@ -49,20 +56,22 @@ constant_angular_velocity = 0.0
 friction = 1.0
 bounce = 0.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2/StaticBody2D" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GrassLeft/StaticBody2D" index="0"]
 
 shape = SubResource( 1 )
 
-[node name="Sprite3" type="Sprite" parent="." index="2"]
+[node name="GrassMid" type="Sprite" parent="." index="2"]
 
-position = Vector2( 128, 0 )
-texture = ExtResource( 1 )
-region_enabled = true
+position = Vector2( 80, -48 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 3 )
 region_rect = Rect2( 0, 64, 64, 64 )
 _sections_unfolded = [ "Region" ]
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Sprite3" index="0"]
+[node name="StaticBody2D" type="StaticBody2D" parent="GrassMid" index="0"]
 
+position = Vector2( 3.8147e-06, 3.8147e-06 )
+scale = Vector2( 2, 2 )
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
@@ -71,20 +80,22 @@ constant_angular_velocity = 0.0
 friction = 1.0
 bounce = 0.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite3/StaticBody2D" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GrassMid/StaticBody2D" index="0"]
 
 shape = SubResource( 1 )
 
-[node name="Sprite4" type="Sprite" parent="." index="3"]
+[node name="GrassCenter" type="Sprite" parent="." index="3"]
 
-position = Vector2( 192, 0 )
-texture = ExtResource( 1 )
-region_enabled = true
+position = Vector2( 80, -16 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 4 )
 region_rect = Rect2( 64, 0, 64, 64 )
 _sections_unfolded = [ "Region" ]
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Sprite4" index="0"]
+[node name="StaticBody2D" type="StaticBody2D" parent="GrassCenter" index="0"]
 
+position = Vector2( -1.52588e-05, 1.90735e-06 )
+scale = Vector2( 2, 2 )
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
@@ -93,7 +104,7 @@ constant_angular_velocity = 0.0
 friction = 1.0
 bounce = 0.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite4/StaticBody2D" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GrassCenter/StaticBody2D" index="0"]
 
 shape = SubResource( 1 )
 
