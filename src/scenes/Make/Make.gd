@@ -3,7 +3,7 @@ extends Node2D
 const CAMERA_MOVE_SPEED_STEP = 100
 const MAP_SIZE = Vector2(64, 32)
 const LEVEL_TILES = Array()
-#const LEVEL_ITEMS = Array()
+const LEVEL_ITEMS = Array()
 
 const CAMERA_PADDING = Vector2(256,256)
 const RECT_COLOR = Color(0, 0, 1,.2)
@@ -15,23 +15,13 @@ var rmb_down = false
 
 var ScreenSize = Vector2(ProjectSettings.get_setting("display/window/size/width"),ProjectSettings.get_setting("display/window/size/height"))
 
-var STYLES = {
-'DIRT':'Dirt',
-'GRASS':'Grass',
-'PLANET':'Planet',
-'SAND':'Sand',
-'SNOW':'Snow',
-'STONE':'Stone'
-}
-var style = STYLES.GRASS
-
 onready var FloorSheet = preload("res://src/tiles/tileSheet.tscn").instance()
 onready var Grid = preload("res://src/lib/grid.gd").new()
 onready var Player = preload("res://src/sprites/Player/Player2.tscn")
-onready var currentItem# = FloorSheet.get_node("Earth")
+onready var currentSelection# = FloorSheet.get_node("Earth")
+
 var TILES_PARENT
-
-
+var ITEMS_PARENT
 
 func _ready():
 	var existing_level = SceneSwitcher.get_param("json")
@@ -41,10 +31,34 @@ func _ready():
 	
 	$UI/TopPanel/RunButton.connect("pressed",self,"make_json")
 	$UI/TopPanel/GroundButton.connect("pressed",self,"current_item_earth")
-	#$UI/TopPanel/PlayerButton.connect("pressed",self,"current_item_player")
-	#$UI/TopPanel/CoinButton.connect("pressed",self,"current_item_player")
+
+	init_style_list()
+
+
+func init_style_list():
+	var item_list = $UI/TopPanel/ItemList
+
+	for ItemID in range(FloorSheet.STYLES.size()):
+		item_list.add_item(FloorSheet.STYLES.values()[ItemID],null,true)
+	
+	item_list.select(0 ,true) #This sets a default so we don't have
+    # to do error catching if an empty selection is captured.
+	#get_node("GoButton").connect("pressed",self,"ReportListItem")
+	item_list.connect("item_selected", self,"style_selected")
+	
+func style_selected(index):
+	var style = FloorSheet.STYLES.values()[index]
+	
+	#change tileset (future tiles)
+	FloorSheet.change_tileset_style(style)
+	
+	#change all existing tiles
+	for i in range(0, $TILES.get_child_count()):
+		var sprite = $TILES.get_child(i)
+		FloorSheet.change_sprite_style(sprite, style)
+
 func current_item_earth():
-	currentItem = FloorSheet.get_node("GrassCenter")
+	currentSelection = FloorSheet.get_node("GrassCenter")
 	
 func change_style():
 		pass
@@ -68,22 +82,39 @@ func initCamera():
 func initTiles(json):
 	#add a place to put tiles
 	TILES_PARENT = $TILES
+	ITEMS_PARENT = $ITEMS
+	
 
 	#init empty array(s)
 	for x in range(MAP_SIZE.x):
 		for y in range(MAP_SIZE.x):
 			if(y == 0):	#add new y array
 				LEVEL_TILES.insert(x,Array())
-				#LEVEL_ITEMS.insert(x,Array())
+				LEVEL_ITEMS.insert(x,Array())
 			LEVEL_TILES[x].insert(y,null)
-			#LEVEL_ITEMS[x].insert(y,null)
+			LEVEL_ITEMS[x].insert(y,null)
 			
 	if json:
 		var tiles = json.tiles
+		var items = json.items
+		
+		#load style
+		FloorSheet.change_tileset_style(json.style)
+		
+		#items
+		for i in range(items.size()):
+			var current_item = items[i]
+			LEVEL_ITEMS[current_item.x][current_item.y] = current_item
+			var item_type = FloorSheet.get_node(current_item.type)
+			var item = item_type.duplicate()
+			ITEMS_PARENT.add_child(item)
+			item.position = Vector2(Grid.GRID_SIZE * current_item.x + (Grid.GRID_SIZE/2), Grid.GRID_SIZE * current_item.y + (Grid.GRID_SIZE/2))
+			item.name = process_name(current_item['name'])
+		
+		#times
 		for i in range(tiles.size()):
 			var current_tile = tiles[i]
 			LEVEL_TILES[current_tile.x][current_tile.y] = current_tile
-			
 			var tile_type = FloorSheet.get_node(current_tile.type)
 			var tile = tile_type.duplicate()
 			TILES_PARENT.add_child(tile)
@@ -99,12 +130,12 @@ func process_name(name):
 func place_tile():
 
 	if in_grid_range():
-		if currentItem:
+		if currentSelection:
 			var current_cell_value = LEVEL_TILES[cell_position.x][cell_position.y]
 			if current_cell_value:
 				remove_tile()#empty it
 				
-			var newItem = currentItem.duplicate()
+			var newItem = currentSelection.duplicate()
 					
 			#DELETE EVERYTHING EXCEPT THE SPRITE (delete collision stuff)
 			for i in range(0, newItem.get_child_count()):
@@ -113,7 +144,7 @@ func place_tile():
 			newItem.name = process_name(newItem.name)
 			
 			#LEVEL_TILES[cell_position.x][cell_position.y] = newItem.name #update cell value
-			LEVEL_TILES[cell_position.x][cell_position.y] = {'name':newItem.name, 'type':currentItem.name} #update cell value
+			LEVEL_TILES[cell_position.x][cell_position.y] = {'name':newItem.name, 'type':currentSelection.name} #update cell value
 
 func remove_tile():
 	if in_grid_range():
@@ -158,9 +189,9 @@ func _input(ev):
 		snapped_position = Grid.pos_to_snap(mouse_pos)
 		cell_position = Grid.pos_to_cell(mouse_pos)
 		
-		if currentItem:
+		if currentSelection:
 			var center_of_cell = Vector2(snapped_position.x+(Grid.GRID_SIZE/2), snapped_position.y+(Grid.GRID_SIZE/2))
-			currentItem.position = center_of_cell
+			currentSelection.position = center_of_cell
 		
 		#TODO fix this
 		if lmb_down:
@@ -179,14 +210,23 @@ func _input(ev):
 			$Camera2D.position.y += CAMERA_MOVE_SPEED_STEP
 				
 		force_camera_fix()
-	#make_json()
 	
 	
 	update() #rather important...
 	
 	
 func make_json():
-	var my_json = {'tiles':[]}
+	var my_json = {'tiles':[], 'items':[], 'style':FloorSheet.current_style}
+	
+	#items
+	for x in range(LEVEL_ITEMS.size()):
+		for y in range(LEVEL_ITEMS[x].size()):
+			var current = LEVEL_ITEMS[x][y]
+			if current:
+				var j = {'name':current['name'],'type':current['type'], 'x':x, 'y':y};
+				my_json['items'].append(j)
+	
+	#tiles
 	for x in range(LEVEL_TILES.size()):
 		for y in range(LEVEL_TILES[x].size()):
 			var current = LEVEL_TILES[x][y]

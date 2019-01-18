@@ -10,6 +10,10 @@ onready var Grid = preload("res://src/lib/grid.gd").new()
 onready var Player = preload("res://src/sprites/Player/Player2.tscn")
 
 func build(json):
+
+	#set style
+	FloorSheet.change_tileset_style(json.style)
+
 	var tiles = json.tiles
 	for i in range(tiles.size()):
 		var current_tile = tiles[i]
