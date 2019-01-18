@@ -13,7 +13,8 @@ var cell_position = Vector2()
 var lmb_down = false
 var rmb_down = false
 
-var ScreenSize = Vector2(ProjectSettings.get_setting("display/window/size/width"),ProjectSettings.get_setting("display/window/size/height"))
+var player_position
+
 
 onready var FloorSheet = preload("res://src/tiles/tileSheet.tscn").instance()
 onready var Grid = preload("res://src/lib/grid.gd").new()
@@ -33,6 +34,7 @@ func _ready():
 	$UI/TopPanel/GroundButton.connect("pressed",self,"current_item_earth")
 
 	init_style_list()
+	
 
 
 func init_style_list():
@@ -66,12 +68,12 @@ func change_style():
 func force_camera_fix():
 	if $Camera2D.position.x < $Camera2D.limit_left:
 		$Camera2D.position.x = $Camera2D.limit_left
-	if $Camera2D.position.x > $Camera2D.limit_right-(ScreenSize.x*$Camera2D.zoom.x):
-		$Camera2D.position.x = $Camera2D.limit_right-(ScreenSize.x*$Camera2D.zoom.x)
+	if $Camera2D.position.x > $Camera2D.limit_right-(Global.ScreenSize.x*$Camera2D.zoom.x):
+		$Camera2D.position.x = $Camera2D.limit_right-(Global.ScreenSize.x*$Camera2D.zoom.x)
 	if $Camera2D.position.y < $Camera2D.limit_top:
 		$Camera2D.position.y = $Camera2D.limit_top
-	if $Camera2D.position.y > $Camera2D.limit_bottom-(ScreenSize.y*$Camera2D.zoom.y):
-		$Camera2D.position.y = $Camera2D.limit_bottom-(ScreenSize.y*$Camera2D.zoom.y)
+	if $Camera2D.position.y > $Camera2D.limit_bottom-(Global.ScreenSize.y*$Camera2D.zoom.y):
+		$Camera2D.position.y = $Camera2D.limit_bottom-(Global.ScreenSize.y*$Camera2D.zoom.y)
 
 func initCamera():
 	$Camera2D.limit_left = -CAMERA_PADDING.x
@@ -217,6 +219,10 @@ func _input(ev):
 	
 func make_json():
 	var my_json = {'tiles':[], 'items':[], 'style':FloorSheet.current_style}
+	
+	#if !player_position:
+	#		Global.alert("You have not placed a player start position.")
+	#		return
 	
 	#items
 	for x in range(LEVEL_ITEMS.size()):
