@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://src/scenes/Play/Run.gd" type="Script" id=1]
 [ext_resource path="res://src/elements/parallax_bg.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/elements/controls.tscn" type="PackedScene" id=3]
 
 [node name="Run" type="Node"]
 
@@ -43,5 +44,7 @@ align = 1
 _sections_unfolded = [ "Rect" ]
 
 [node name="parallax_bg" parent="." index="1" instance=ExtResource( 2 )]
+
+[node name="Controls" parent="." index="2" instance=ExtResource( 3 )]
 
 
