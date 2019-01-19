@@ -19,7 +19,7 @@ var player_position
 onready var FloorSheet = preload("res://src/tiles/tileSheet.tscn").instance()
 onready var Grid = preload("res://src/lib/grid.gd").new()
 onready var Player = preload("res://src/sprites/Player/Player2.tscn")
-onready var currentSelection# = FloorSheet.get_node("Earth")
+onready var currentSelection
 
 var TILES_PARENT
 var ITEMS_PARENT
