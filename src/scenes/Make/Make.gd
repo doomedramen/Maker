@@ -30,15 +30,15 @@ func _ready():
 	initCamera()
 	force_camera_fix()
 	
-	$UI/TopPanel/RunButton.connect("pressed",self,"make_json")
-	$UI/TopPanel/GroundButton.connect("pressed",self,"current_item_earth")
+	$UI/RunButton.connect("pressed",self,"make_json")
+	$UI/TopPanel/Tabs/Blocks/GroundButton.connect("pressed",self,"current_item_earth")
 
 	init_style_list()
 	
 
 
 func init_style_list():
-	var item_list = $UI/TopPanel/ItemList
+	var item_list = $UI/ItemList
 
 	for ItemID in range(FloorSheet.STYLES.size()):
 		item_list.add_item(FloorSheet.STYLES.values()[ItemID],null,true)

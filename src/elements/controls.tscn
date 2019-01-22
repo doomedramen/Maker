@@ -1,19 +1,14 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://src/elements/controls.gd" type="Script" id=1]
 [ext_resource path="res://assets/controls/shadedDark/03.png" type="Texture" id=2]
-[ext_resource path="res://assets/controls/shadedDark/05.png" type="Texture" id=3]
-[ext_resource path="res://assets/controls/shadedDark/10.png" type="Texture" id=4]
+[ext_resource path="res://assets/controls/shadedDark/10.png" type="Texture" id=3]
+[ext_resource path="res://assets/controls/shadedDark/05.png" type="Texture" id=4]
 [ext_resource path="res://assets/controls/shadedDark/06.png" type="Texture" id=5]
 [ext_resource path="res://assets/controls/shadedDark/36.png" type="Texture" id=6]
 [ext_resource path="res://assets/controls/shadedDark/37.png" type="Texture" id=7]
 
-[sub_resource type="CircleShape2D" id=1]
-
-custom_solver_bias = 0.0
-radius = 32.0001
-
-[node name="Controls" type="CanvasLayer" index="0"]
+[node name="Controls" type="CanvasLayer"]
 
 layer = 1
 offset = Vector2( 0, 0 )
@@ -22,181 +17,82 @@ scale = Vector2( 1, 1 )
 transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 script = ExtResource( 1 )
 
-[node name="Directions" type="Control" parent="." index="0"]
+[node name="Up" type="TouchScreenButton" parent="." index="0"]
 
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 144.0
-margin_top = 496.0
-margin_right = 184.0
-margin_bottom = 536.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
+position = Vector2( 88, 400 )
+normal = ExtResource( 2 )
+pressed = null
+bitmask = null
+shape = null
+shape_centered = true
+shape_visible = true
+passby_press = false
+action = "ui_up"
+visibility_mode = 0
 
-[node name="UP" type="Sprite" parent="Directions" index="0"]
+[node name="Down" type="TouchScreenButton" parent="." index="1"]
 
-position = Vector2( -40, -40 )
-texture = ExtResource( 2 )
+position = Vector2( 88, 496 )
+normal = ExtResource( 3 )
+pressed = null
+bitmask = null
+shape = null
+shape_centered = true
+shape_visible = true
+passby_press = false
+action = "ui_down"
+visibility_mode = 0
 
-[node name="Area2D" type="Area2D" parent="Directions/UP" index="0"]
+[node name="Left" type="TouchScreenButton" parent="." index="2"]
 
-position = Vector2( -2.38419e-06, -3.99998 )
-scale = Vector2( 1.25, 1.375 )
-input_pickable = true
-gravity_vec = Vector2( 0, 1 )
-gravity = 98.0
-linear_damp = 0.1
-angular_damp = 1.0
-audio_bus_override = false
-audio_bus_name = "Master"
+position = Vector2( 32, 456 )
+normal = ExtResource( 4 )
+pressed = null
+bitmask = null
+shape = null
+shape_centered = true
+shape_visible = true
+passby_press = false
+action = "ui_left"
+visibility_mode = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Directions/UP/Area2D" index="0"]
+[node name="Right" type="TouchScreenButton" parent="." index="3"]
 
-position = Vector2( 7.62939e-06, -2.82996 )
-scale = Vector2( 3.29324, -3.12678 )
-build_mode = 0
-polygon = PoolVector2Array( -7.7735, 7.46835, 7.7735, 7.46835, 7.7735, -3.69621, -1.90735e-06, -11.1393, -7.7735, -3.69621 )
+position = Vector2( 128, 456 )
+normal = ExtResource( 5 )
+pressed = null
+bitmask = null
+shape = null
+shape_centered = true
+shape_visible = true
+passby_press = true
+action = "ui_right"
+visibility_mode = 0
 
-[node name="LEFT" type="Sprite" parent="Directions" index="1"]
+[node name="A" type="TouchScreenButton" parent="." index="4"]
 
-position = Vector2( -80, 0 )
-texture = ExtResource( 3 )
+position = Vector2( 768, 472 )
+normal = ExtResource( 6 )
+pressed = null
+bitmask = null
+shape = null
+shape_centered = true
+shape_visible = true
+passby_press = false
+action = "sprint"
+visibility_mode = 0
 
-[node name="DOWN" type="Sprite" parent="Directions" index="2"]
+[node name="B" type="TouchScreenButton" parent="." index="5"]
 
-position = Vector2( -40, 40 )
-texture = ExtResource( 4 )
-
-[node name="Area2D2" type="Area2D" parent="Directions/DOWN" index="0"]
-
-position = Vector2( 0, 4 )
-scale = Vector2( 1.25, -1.375 )
-input_pickable = true
-gravity_vec = Vector2( 0, 1 )
-gravity = 98.0
-linear_damp = 0.1
-angular_damp = 1.0
-audio_bus_override = false
-audio_bus_name = "Master"
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Directions/DOWN/Area2D2" index="0"]
-
-position = Vector2( 7.62939e-06, -2.82996 )
-scale = Vector2( 3.29324, -3.12678 )
-build_mode = 0
-polygon = PoolVector2Array( -7.7735, 7.46835, 7.7735, 7.46835, 7.7735, -3.69621, -1.90735e-06, -11.1393, -7.7735, -3.69621 )
-
-[node name="RIGHT" type="Sprite" parent="Directions" index="3"]
-
-texture = ExtResource( 5 )
-
-[node name="Area2D3" type="Area2D" parent="Directions/RIGHT" index="0"]
-
-position = Vector2( 5, 0 )
-rotation = -1.5708
-scale = Vector2( 1.25, -1.375 )
-input_pickable = true
-gravity_vec = Vector2( 0, 1 )
-gravity = 98.0
-linear_damp = 0.1
-angular_damp = 1.0
-audio_bus_override = false
-audio_bus_name = "Master"
-_sections_unfolded = [ "Transform" ]
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Directions/RIGHT/Area2D3" index="0"]
-
-position = Vector2( 7.62939e-06, -2.82996 )
-scale = Vector2( 3.29324, -3.12678 )
-build_mode = 0
-polygon = PoolVector2Array( -7.7735, 7.46835, 7.7735, 7.46835, 7.7735, -3.69621, -1.90735e-06, -11.1393, -7.7735, -3.69621 )
-
-[node name="Area2D4" type="Area2D" parent="Directions/RIGHT" index="1"]
-
-position = Vector2( -86.35, 0 )
-rotation = -1.5708
-scale = Vector2( 1.25, 1.43281 )
-input_pickable = true
-gravity_vec = Vector2( 0, 1 )
-gravity = 98.0
-linear_damp = 0.1
-angular_damp = 1.0
-audio_bus_override = false
-audio_bus_name = "Master"
-_sections_unfolded = [ "Transform" ]
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Directions/RIGHT/Area2D4" index="0"]
-
-position = Vector2( 7.62939e-06, -2.82996 )
-scale = Vector2( 3.29324, -3.12678 )
-build_mode = 0
-polygon = PoolVector2Array( -7.7735, 7.46835, 7.7735, 7.46835, 7.7735, -3.69621, -1.90735e-06, -11.1393, -7.7735, -3.69621 )
-
-[node name="Buttons" type="Control" parent="." index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 144.0
-margin_top = 496.0
-margin_right = 184.0
-margin_bottom = 536.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-
-[node name="A" type="Sprite" parent="Buttons" index="0"]
-
-editor/display_folded = true
-position = Vector2( 784, 0 )
-texture = ExtResource( 6 )
-
-[node name="Area2D2" type="Area2D" parent="Buttons/A" index="0"]
-
-position = Vector2( -104, -3.05176e-05 )
-scale = Vector2( 1.5, 1.5 )
-input_pickable = true
-gravity_vec = Vector2( 0, 1 )
-gravity = 98.0
-linear_damp = 0.1
-angular_damp = 1.0
-audio_bus_override = false
-audio_bus_name = "Master"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Buttons/A/Area2D2" index="0"]
-
-shape = SubResource( 1 )
-
-[node name="B" type="Sprite" parent="Buttons" index="1"]
-
-editor/display_folded = true
-position = Vector2( 680, 0 )
-texture = ExtResource( 7 )
-
-[node name="Area2D" type="Area2D" parent="Buttons/B" index="0"]
-
-position = Vector2( 104, 0 )
-scale = Vector2( 1.5, 1.5 )
-input_pickable = true
-gravity_vec = Vector2( 0, 1 )
-gravity = 98.0
-linear_damp = 0.1
-angular_damp = 1.0
-audio_bus_override = false
-audio_bus_name = "Master"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Buttons/B/Area2D" index="0"]
-
-shape = SubResource( 1 )
+position = Vector2( 896, 472 )
+normal = ExtResource( 7 )
+pressed = null
+bitmask = null
+shape = null
+shape_centered = true
+shape_visible = true
+passby_press = false
+action = "jump"
+visibility_mode = 0
 
 
