@@ -15,6 +15,10 @@ var rmb_down = false
 
 var player_position
 
+var need_to_reload_tiles = false
+
+const AutoTile = preload("res://src/lib/auto_tile.gd")
+const Util = preload("res://src/lib//util.gd")
 
 onready var FloorSheet = preload("res://src/tiles/tileSheet.tscn").instance()
 onready var Grid = preload("res://src/lib/grid.gd").new()
@@ -34,8 +38,6 @@ func _ready():
 	$UI/TopPanel/Tabs/Blocks/GroundButton.connect("pressed",self,"current_item_earth")
 
 	init_style_list()
-	
-
 
 func init_style_list():
 	var item_list = $UI/ItemList
@@ -60,7 +62,7 @@ func style_selected(index):
 		FloorSheet.change_sprite_style(sprite, style)
 
 func current_item_earth():
-	currentSelection = FloorSheet.get_node("GrassCenter")
+	currentSelection = FloorSheet.get_node("SliceMiddle")
 	
 func change_style():
 		pass
@@ -107,55 +109,72 @@ func initTiles(json):
 		for i in range(items.size()):
 			var current_item = items[i]
 			LEVEL_ITEMS[current_item.x][current_item.y] = current_item
-			var item_type = FloorSheet.get_node(current_item.type)
-			var item = item_type.duplicate()
-			ITEMS_PARENT.add_child(item)
-			item.position = Vector2(Grid.GRID_SIZE * current_item.x + (Grid.GRID_SIZE/2), Grid.GRID_SIZE * current_item.y + (Grid.GRID_SIZE/2))
-			item.name = process_name(current_item['name'])
+			#reload_tiles()
 		
 		#times
 		for i in range(tiles.size()):
 			var current_tile = tiles[i]
 			LEVEL_TILES[current_tile.x][current_tile.y] = current_tile
-			var tile_type = FloorSheet.get_node(current_tile.type)
-			var tile = tile_type.duplicate()
-			TILES_PARENT.add_child(tile)
-			tile.position = Vector2(Grid.GRID_SIZE * current_tile.x + (Grid.GRID_SIZE/2), Grid.GRID_SIZE * current_tile.y + (Grid.GRID_SIZE/2))
-			tile.name = process_name(current_tile['name'])
+			reload_tiles()
 
 func in_grid_range():
 	return cell_position.x >= 0 and cell_position.y >= 0 and cell_position.x < MAP_SIZE.x and cell_position.y < MAP_SIZE.y
 
-func process_name(name):
-	return name.replace('@','')
 
 func place_tile():
 
 	if in_grid_range():
 		if currentSelection:
-			var current_cell_value = LEVEL_TILES[cell_position.x][cell_position.y]
-			if current_cell_value:
-				remove_tile()#empty it
-				
+			#var current_cell_value = LEVEL_TILES[cell_position.x][cell_position.y]
 			var newItem = currentSelection.duplicate()
 					
 			#DELETE EVERYTHING EXCEPT THE SPRITE (delete collision stuff)
-			for i in range(0, newItem.get_child_count()):
-	    		newItem.get_child(i).queue_free()
-			TILES_PARENT.add_child(newItem)
-			newItem.name = process_name(newItem.name)
+			Util.remove_children(newItem)
 			
-			#LEVEL_TILES[cell_position.x][cell_position.y] = newItem.name #update cell value
-			LEVEL_TILES[cell_position.x][cell_position.y] = {'name':newItem.name, 'type':currentSelection.name} #update cell value
+
+
+			#TODO add temp tile
+			var tile = currentSelection.duplicate()
+			#print(tile)
+			tile.position = Vector2(Grid.GRID_SIZE * cell_position.x, Grid.GRID_SIZE * cell_position.y)
+			TILES_PARENT.add_child(tile)
+			LEVEL_TILES[cell_position.x][cell_position.y] = {'name':Util.process_node_name(tile.name), 'type':currentSelection.name} #update cell value
+
+			need_to_reload_tiles = true
+
 
 func remove_tile():
 	if in_grid_range():
 		var current_cell_value = LEVEL_TILES[cell_position.x][cell_position.y]
 		if current_cell_value != null:
-			#print("culling ",current_cell_value['name'])
-			var node_to_remove = TILES_PARENT.find_node(current_cell_value['name'], false, false)
-			node_to_remove.queue_free()
 			LEVEL_TILES[cell_position.x][cell_position.y] = null
+		
+			##todo remove before reload
+			var tile_to_delete = TILES_PARENT.get_node(current_cell_value['name'])
+			print('removing ', current_cell_value)
+			Util.remove_child_by_node(TILES_PARENT, tile_to_delete)
+		
+		need_to_reload_tiles = true
+
+func reload_tiles():
+	AutoTile.process_tiles(LEVEL_TILES, FloorSheet.current_style)
+
+	#remove all current cells
+	Util.remove_children(TILES_PARENT)
+				
+	#now add them back in
+	for x in range(LEVEL_TILES.size()):
+		for y in range(LEVEL_TILES[x].size()):
+			var current = LEVEL_TILES[x][y]
+			if current:
+				#print(current.type)
+				var tile = FloorSheet.get_node(current.type).duplicate()
+				#print(tile)
+				tile.position = Vector2(Grid.GRID_SIZE * x, Grid.GRID_SIZE * y)
+				tile.name = Util.process_node_name(current['name'])
+				TILES_PARENT.add_child(tile)
+				
+	need_to_reload_tiles = false
 
 func _draw():
 	Grid.draw_grid_v2($Camera2D, MAP_SIZE,self)
@@ -174,6 +193,10 @@ func _input(ev):
 
 	if ev is InputEventMouseButton and !over_UI:
 	
+	
+		if lmb_down and !ev.pressed: #mouse-up
+			reload_tiles()
+	
 		if ev.button_index == BUTTON_LEFT:
 			if !lmb_down and ev.pressed: #lmb just went down for the first time
 				place_tile()
@@ -182,6 +205,7 @@ func _input(ev):
 			if !rmb_down and ev.pressed: #rmb just went down for the first time
 				remove_tile()
 			rmb_down = ev.pressed
+			
 			
 	if ev is InputEventMouseMotion and !over_UI:
 		var mouse_pos = get_global_mouse_position();

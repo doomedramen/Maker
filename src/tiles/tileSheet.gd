@@ -3,11 +3,11 @@ extends Node
 const GROUND_ROOT = "res://assets/tiles/Ground"
 var STYLES = {
 'GRASS':'Grass',
-'DIRT':'Dirt',
-'PLANET':'Planet',
-'SAND':'Sand',
-'SNOW':'Snow',
-'STONE':'Stone'
+#'DIRT':'Dirt',
+#'PLANET':'Planet',
+#'SAND':'Sand',
+#'SNOW':'Snow',
+#'STONE':'Stone'
 }
 
 var current_style = STYLES.GRASS

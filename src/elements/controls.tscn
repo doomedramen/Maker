@@ -8,7 +8,7 @@
 [ext_resource path="res://assets/controls/shadedDark/36.png" type="Texture" id=6]
 [ext_resource path="res://assets/controls/shadedDark/37.png" type="Texture" id=7]
 
-[node name="Controls" type="CanvasLayer"]
+[node name="Controls" type="CanvasLayer" index="0"]
 
 layer = 1
 offset = Vector2( 0, 0 )

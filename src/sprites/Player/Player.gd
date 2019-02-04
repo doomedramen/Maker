@@ -17,6 +17,8 @@ const JUMP_INPUT_NAME = "jump"
 const RUN_INPUT_NAME = "sprint"
 const DOWN_INPUT_NAME = "ui_down"
 
+const Util = preload("res://src/lib/util.gd")
+
 const dusts = []
 const dusts_max_size = 4
 
@@ -161,20 +163,13 @@ func _physics_process(delta):
 		anim = new_anim
 		sprite.play(anim)
 		
+			
 func create_floor_dust():
-	#limt them!
-	if dusts.size() >= dusts_max_size:
-		dusts[0].queue_free()
-		dusts.remove(0)
-
-
-	var dust = KickupDust.instance()
-	dust.get_node("Particles2D").restart()
 	
-	
-	#var collision = get_slide_collision(get_slide_count() - 1)
 	#double check for floor collision
 	if is_on_floor():
+		var dust = KickupDust.instance()
+		dust.get_node("Particles2D").restart()
 		dust.z_index = self.z_index+1
 		dust.transform = self.transform
 		dust.transform[2][1] += $CollisionShape2D.shape.extents[1]
